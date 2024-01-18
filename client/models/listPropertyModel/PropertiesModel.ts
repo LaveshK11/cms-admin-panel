@@ -1,0 +1,75 @@
+import sequelizeInstance from '@/config/database/dbConnect';
+import {  DataTypes } from 'sequelize';
+
+const AllProperties = sequelizeInstance.define(
+    'all_properties',
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        count: DataTypes.STRING,
+        Ad_Type: DataTypes.STRING,
+        Unit_Type: DataTypes.STRING,
+        Unit_Model: DataTypes.STRING,
+        Primary_View: DataTypes.STRING,
+        Unit_Builtup_Area: DataTypes.STRING,
+        No_of_Bathroom: DataTypes.STRING,
+        Property_Title: DataTypes.STRING,
+        Web_Remarks: DataTypes.TEXT,
+        Emirate: DataTypes.STRING,
+        Community: DataTypes.STRING,
+        Exclusive: DataTypes.BOOLEAN,   
+        Cheques: DataTypes.STRING,
+        Plot_Area: DataTypes.STRING,
+        Property_Name: DataTypes.STRING,
+        Property_Ref_No: DataTypes.STRING,
+        Listing_Agent: DataTypes.STRING,
+        Listing_Agent_Phone: DataTypes.STRING,
+        Listing_Agent_Photo: DataTypes.STRING,
+        Listing_Date: DataTypes.STRING,
+        Last_Updated: DataTypes.STRING,
+        Bedrooms: DataTypes.STRING,
+        Listing_Agent_Email: DataTypes.STRING,
+        Price: DataTypes.STRING,
+        Frequency: DataTypes.STRING,
+        Unit_Reference_No: DataTypes.STRING,
+        No_of_Rooms: DataTypes.STRING,
+        Latitude: DataTypes.STRING,
+        Longitude: DataTypes.STRING,
+        unit_measure: DataTypes.STRING,
+        Featured: DataTypes.BOOLEAN,
+        Fitted: DataTypes.STRING,
+        Images: DataTypes.TEXT,
+        Thumb: DataTypes.TEXT,
+        Facilities: DataTypes.TEXT,
+        company_name: DataTypes.STRING,
+        Web_Tour: DataTypes.STRING,
+        Threesixty_Tour: DataTypes.STRING,
+        Audio_Tour: DataTypes.STRING,
+        Virtual_Tour: DataTypes.STRING,
+        QR_Code: DataTypes.STRING,
+        company_logo: DataTypes.STRING,
+        Parking: DataTypes.STRING,
+        Strno: DataTypes.STRING,
+        preview_link: DataTypes.STRING,
+        price_on_application: DataTypes.STRING,
+        off_plan: DataTypes.STRING,
+        permit_number: DataTypes.STRING,
+        property_type: DataTypes.STRING,
+        completion_status: DataTypes.STRING,
+        date_time: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: sequelizeInstance.literal('CURRENT_TIMESTAMP'),
+        },
+    },
+    {
+        timestamps: false,
+    }
+);
+
+AllProperties.sync()
+
+export default AllProperties;
