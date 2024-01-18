@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 interface SidebarProps {
   sidebarOpen: boolean;
