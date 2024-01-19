@@ -1,5 +1,6 @@
-import sequelizeInstance from "@/config/database/dbConnect";
+
 import { DataTypes, Model, Optional, ModelAttributes } from "sequelize";
+import { sequelizeInstance } from "../dbConnect";
 
 export interface TeamAttributes {
     id?: number;
