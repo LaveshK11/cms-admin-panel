@@ -6,6 +6,8 @@ import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import DeleteConfirmationModal from "@/components/ModelBox/DelModelBox";
 import Link from "next/link";
+import ServerApi from "@/config/instance/serverApiInstance";
+import ErrorModal from "@/components/ModelBox/ErrorModelBox";
 
 
 export default function ListProperty() {
@@ -15,30 +17,63 @@ export default function ListProperty() {
 
   const [idToDel, setidToDel] = useState<number>()
 
+  const [error, setError] = useState<boolean>(false)
+
+  const fetchData = async () => {
+    try {
+      const result = await api.get("/team");
+      setTableData(result.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+
   const handleCloseModal = (): void => {
     setModalOpen(false);
   };
 
-  async function handleDelete(): Promise<void> {
-    let data: object = await api.delete(`/team/delete/${idToDel}`)
-    console.log(data)
+  async function handleDelete(): Promise<boolean> {
+    try {
+      setError(false)
+
+      interface ResultObj {
+        data: {
+          status: boolean,
+          message: string
+        }
+      }
+      let data: ResultObj = await ServerApi.delete(`/team/delete/${idToDel}`)
+
+      if (data.data.status) {
+        fetchData();
+        return true;
+      }
+      else {
+        setError(false)
+        return false;
+      }
+    } catch (error) {
+      setError(true)
+      return false
+    }
   }
 
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await api.get("/team");
-        setTableData(result.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
     fetchData();
   }, []);
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-center">
+      <div className="add-btn">
+        <Link href={"team/addMember"}>
+          <button className="bg-transparent text-blue-700 font-semibold  py-2 px-4 border border-blue-500 bg-[#1C2434] text-white	 float-right">
+            ADD TEAM MEMBER
+          </button>
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-center mt-10">
         {tableData.length ? (
           tableData.map((item, key) => (
             <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-90 my-4" key={key}>
@@ -92,6 +127,8 @@ export default function ListProperty() {
         onClose={handleCloseModal}
         onDelete={handleDelete}
       />
+      <ErrorModal isOpen={error}
+        errorMessage={"Error While Deleting TEAM Member"}></ErrorModal>
     </>
   );
 }

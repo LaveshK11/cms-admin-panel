@@ -3,19 +3,26 @@ import { useState } from 'react';
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => object;
+  onDelete: () => Promise<boolean>;
 }
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onDelete }: DeleteConfirmationModalProps) => {
   const [isDeleting, setDeleting] = useState(false);
 
-  const handleDelete = () => {
+  const handleDelete = async (): Promise<void> => {
     setDeleting(true);
-    setTimeout(() => {
+    let result = await onDelete();
+    if (result) {
+      setTimeout(() => {
+        setDeleting(false);
+        onClose();
+      }, 1000)
+    }
+    else {
       setDeleting(false);
-      onDelete();
       onClose();
-    }, 200);
+    }
+
   };
 
   return (

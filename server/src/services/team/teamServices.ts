@@ -14,7 +14,6 @@ class TeamServices {
     }
 
     public async deleteMember(id: string): Promise<object> {
-        console.log(id)
         const result: object = this.deleteOpeations(id)
         return result
     }
