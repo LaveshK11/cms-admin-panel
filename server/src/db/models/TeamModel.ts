@@ -10,9 +10,9 @@ export interface TeamAttributes {
     specialisation: string;
     image: string;
     social_media: string;
+    email: string
     about: string;
     language: string;
-    data_time?: Date;
 }
 
 interface TeamCreationAttributes extends Optional<TeamAttributes, 'id'> { }
@@ -38,6 +38,11 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
     specialisation: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -55,14 +60,11 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
     language: {
         type: DataTypes.STRING,
     },
-    data_time: {
-        type: DataTypes.DATE,
-        allowNull: false, // Make it required if needed
-    }
+
 }, {
     timestamps: true
 })
 
-Team.sync({ alter: true });
+Team.sync({ alter: true, force: true });
 
 export default Team

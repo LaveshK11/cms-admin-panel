@@ -3,13 +3,10 @@ import { UserCredModel } from "../../db/models/userCredModel";
 import { ValidationError } from "../../utils/custom/customError";
 import Token_Utitlity from "../../utils/token/tokenGenerator";
 import { loginSchema } from "../../utils/validation/schemas/dataObj";
+import { ValidationResult } from '../../utils/interface/jodResullt';
 
 const tokenService = new Token_Utitlity();
 
-interface ValidationResult {
-    error?: object;
-    value: object;
-}
 
 interface dataValueObj {
     dataValues: {
@@ -24,7 +21,7 @@ class loginController {
         const validateData: ValidationResult = loginSchema.validate({ email, password });
 
         if (validateData.error) {
-            throw new ValidationError();
+            throw new ValidationError(validateData.error.message);
         } else {
             try {
                 const result: dataValueObj | null = await UserCredModel.findOne({

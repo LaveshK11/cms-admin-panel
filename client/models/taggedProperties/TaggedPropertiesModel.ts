@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelizeInstance from '@/config/database/dbConnect';
+import sequelizeInstance from '@/lib/database/dbConnect';
 
 // Define attributes for the model
 interface UserAttributes {

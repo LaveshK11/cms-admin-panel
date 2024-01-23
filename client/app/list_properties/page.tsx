@@ -1,4 +1,4 @@
-import api from "@/config/instance/axiosInstance";
+import api from "@/lib/instance/axiosInstance";
 import { PropertyData } from "@/interfaces/listProperty";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 

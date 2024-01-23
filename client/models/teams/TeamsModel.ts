@@ -1,4 +1,4 @@
-import sequelizeInstance from "@/config/database/dbConnect";
+import sequelizeInstance from "@/lib/database/dbConnect";
 import { DataTypes, Model, Optional, ModelAttributes } from "sequelize";
 
 export interface TeamAttributes {
@@ -9,9 +9,9 @@ export interface TeamAttributes {
     specialisation: string;
     image: string;
     social_media: string;
+    email: string,
     about: string;
     language: string;
-    data_time?: Date;
 }
 
 interface TeamCreationAttributes extends Optional<TeamAttributes, 'id'> { }
@@ -47,6 +47,11 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
     social_media: {
         type: DataTypes.STRING,
     },
+    email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+    },
     about: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -54,14 +59,11 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
     language: {
         type: DataTypes.STRING,
     },
-    data_time: {
-        type: DataTypes.DATE,
-        allowNull: false, // Make it required if needed
-    }
+  
 }, {
     timestamps: true
 })
 
-Team.sync({ alter: true });
+Team.sync({});
 
 export default Team

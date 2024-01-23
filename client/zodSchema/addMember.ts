@@ -11,10 +11,11 @@ export const addMemberSchema = z.object({
 
     email: z.string().email(),
 
-    linkedin: z.string().url(),
+    social_media: z.string().url(),
+
+    language: z.string().min(1),
 
     about: z.string().min(1),
 
-    attachFile: z.object({
-    }),
+    image: z.optional(z.any()), 
 });

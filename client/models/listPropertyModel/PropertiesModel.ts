@@ -1,4 +1,4 @@
-import sequelizeInstance from '@/config/database/dbConnect';
+import sequelizeInstance from '@/lib/database/dbConnect';
 import {  DataTypes } from 'sequelize';
 
 const AllProperties = sequelizeInstance.define(
