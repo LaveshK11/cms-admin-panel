@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { addMemberSchema } from "@/zodSchema/addMember";
 import ServerApi from "@/lib/instance/serverApiInstance";
+import { toast } from "react-toastify";
 
 type FormData = z.infer<typeof addMemberSchema>;
 
@@ -13,26 +14,26 @@ export default function AddMemberForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
+    reset,
   } = useForm<FormData>({ resolver: zodResolver(addMemberSchema) });
 
   async function onSubmit(data: FormData): Promise<void> {
     try {
       const headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "multipart/form-data",
       };
+      data.image=  data.image[0]
+      const result: any = await ServerApi.post(`/team/addMember`, data, { headers });
 
-      const file = data.image[0];
-      const fileName = file.name;
-
-      const imageUrl = `http://localhost:3000/${fileName}`;
-
-      data.image = imageUrl;
-
-      const result = await ServerApi.post(`/team/addMember`, data, { headers });
-
-      console.log(result);
-    } catch (error) {
-      console.error("Error during POST request:", error);
+      if (result.data.status) {
+        toast.success(result.data.message)
+        reset()
+      }
+      else {
+        toast.error(result.data.message);
+      }
+    } catch (error: any) {
+      toast.error("Error while adding team member")
     }
   }
 
@@ -44,7 +45,7 @@ export default function AddMemberForm() {
             Add Team Member
           </h3>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <div className="p-6.5">
             <div className="w-full ">
               <label className="mb-2.5 block text-black dark:text-white">
@@ -185,7 +186,7 @@ export default function AddMemberForm() {
             </div>
             <div className="mb-6">
               <label className="mb-2.5 block text-black dark:text-white">
-                Message
+                About
                 <span className="text-meta-1">*</span>
               </label>
               <textarea
@@ -215,10 +216,10 @@ export default function AddMemberForm() {
                   })}
                   type="file"
                   name="image"
-                  required 
+                  required
                   className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                 />
-                
+
               </div>
             </div>
             <button

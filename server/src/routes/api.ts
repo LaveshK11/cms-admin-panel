@@ -7,6 +7,11 @@ const router = express.Router();
 
 router.use('/api/v1', index)
 
+router.use('/api/v1/test', (req: Request, res: Response) => {
+  res.send("wokring")
+})
+
+
 router.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(err.statusCode || 500);
   res.json(err);

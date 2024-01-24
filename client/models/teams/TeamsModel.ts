@@ -64,6 +64,6 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
     timestamps: true
 })
 
-Team.sync({});
+Team.sync();
 
 export default Team

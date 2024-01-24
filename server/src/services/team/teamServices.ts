@@ -1,5 +1,5 @@
 import Team, { TeamAttributes } from "../../db/models/TeamModel";
-import { BadRequest, ValidationError } from "../../utils/custom/customError";
+import { ServerError, ValidationError } from "../../utils/custom/customError";
 import { ValidationResult } from "../../utils/interface/jodResullt";
 import { TeamMemberFormSchema } from "../../utils/validation/schemas/dataObj";
 
@@ -33,7 +33,8 @@ class TeamServices {
 
             if (alreayMember) return { status: false, message: "Already Ateam Member" }
             else {
-                let result = await Team.create(data)
+                
+                await Team.create(data)
 
                 return { status: true, message: "Team Member added successfully" }
 
@@ -41,9 +42,7 @@ class TeamServices {
 
         } catch (error) {
 
-            console.log(error)
-
-            return new BadRequest()
+            throw new ServerError()
 
         }
 
