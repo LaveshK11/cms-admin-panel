@@ -13,4 +13,5 @@ router.post('/addMember', upload.single('image'), AddTeamMember)
 
 router.delete('/delete/:id', DeleteTeamMember)
 
+
 export default router;

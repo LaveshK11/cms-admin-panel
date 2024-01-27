@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import api from "@/lib/instance/axiosInstance";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { TeamAttributes, TeamModel } from "@/models/teams/TeamsModel";
+import { TeamAttributes } from "@/models/teams/TeamsModel";
+import * as DOMPurify from 'dompurify';
 
 interface GetParams {
   params: {
@@ -78,15 +79,19 @@ export default function EditTeamPage(params: GetParams) {
                 {tableData.name}
               </h3>
               <p className="font-medium">
-                <span className="font-bold">Position:</span> {tableData.position}
+                <span className="font-bold">Position:</span>{" "}
+                {tableData.position}
               </p>
               <p className="font-medium">
-                <span className="font-bold">Department:</span> {tableData.department}
+                <span className="font-bold">Department:</span>{" "}
+                {tableData.department}
               </p>
               <div className="mt-6.5">
                 <div className="mx-auto mt-4.5 mb-5.5 max-w-94 h-[min-content] rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F] flex justify-center items-center">
                   <div className="flex flex-col justify-center gap-1 xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">Languages:</span>
+                    <span className="font-semibold text-black dark:text-white">
+                      Languages:
+                    </span>
                   </div>
                   <div className="flex xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white flex flex-row ml-1">
@@ -98,7 +103,9 @@ export default function EditTeamPage(params: GetParams) {
               <div className="mt-6.5">
                 <div className="mx-auto mt-4.5 mb-5.5 max-w-94 h-[min-content] rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F] flex justify-center items-center">
                   <div className="flex flex-col justify-center gap-1 xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">Email:</span>
+                    <span className="font-semibold text-black dark:text-white">
+                      Email:
+                    </span>
                   </div>
                   <div className="flex xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white flex flex-row ml-1">
@@ -110,7 +117,9 @@ export default function EditTeamPage(params: GetParams) {
               <div className="mt-6.5">
                 <div className="mx-auto mt-4.5 mb-5.5 max-w-94 h-[min-content] rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F] flex justify-center items-center">
                   <div className="flex flex-col justify-center gap-1 xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">Linkedin: </span>
+                    <span className="font-semibold text-black dark:text-white">
+                      Linkedin:
+                    </span>
                   </div>
                   <div className="flex xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white flex flex-row ml-1">
@@ -121,12 +130,11 @@ export default function EditTeamPage(params: GetParams) {
               </div>
 
               <div className="mx-auto max-w-180">
-                <h4 className="font-semibold text-black dark:text-white">
+                <h4 className="font-semibold text-black dark:text-white" >
                   About Me
                 </h4>
-                <p className="mt-4.5">{tableData.about}</p>
+                <p className="mt-4.5" dangerouslySetInnerHTML={{ __html: tableData.about }}></p>
               </div>
-
             </div>
           </div>
         </div>
