@@ -36,6 +36,7 @@ class loginController {
 
                     const bcrpytCompare: boolean = await bcrpyt.compare(password, hashPassowrd);
 
+
                     if (bcrpytCompare) {
                         const id: number = result.dataValues.id;
                         const userEmail: string = result.dataValues.user_email;
