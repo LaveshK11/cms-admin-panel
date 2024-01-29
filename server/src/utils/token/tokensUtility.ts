@@ -3,7 +3,7 @@ import { BadRequest, ServerError } from "../custom/customError";
 
 
 
-class Token_Utitlity {
+class Token_Utility {
 
     privateKey: string = "usernae";
 
@@ -39,4 +39,4 @@ class Token_Utitlity {
 
 }
 
-export default Token_Utitlity
+export default Token_Utility

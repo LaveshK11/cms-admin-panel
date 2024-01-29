@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthorizationError } from '../utils/custom/customError';
-import Token_Utitlity from '../utils/token/tokenGenerator';
+import Token_Utitlity from '../utils/token/tokensUtility';
 const tokenService = new Token_Utitlity()
 export async function validate(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

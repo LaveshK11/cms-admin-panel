@@ -1,47 +1,37 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { useForm } from "react-hook-form";
-import { SigninForm, signinFromSchemaObj, } from "@/zodSchema/signinForm";
+import { SigninForm, signinFromSchemaObj } from "@/zodSchema/signinForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ServerApi from "@/lib/instance/serverApiInstance";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-
-
 const SignIn: React.FC = () => {
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const { register,
+  const {
+    register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<SigninForm>({ resolver: zodResolver(signinFromSchemaObj) });
 
-
   async function onSubmit(data: SigninForm): Promise<void> {
-
     try {
-      const result: any = await ServerApi.post('/login', data);
+      const result: any = await ServerApi.post("/login", data);
 
       if (result.data.status) {
-        if (result.data.token != undefined) {
-          localStorage.setItem('A_T', result.data.token)
-        }
-        toast.success("Login Successfully!")
-        router.push('/')
-      }
-      else {
-        toast.success(result.message)
+        toast.success("Login Successfully!");
+        router.push("/");
+      } else {
+        toast.error(result.data.message);
       }
     } catch (error) {
-      toast.error("Error while login")
+      toast.error("Error while login");
     }
-
   }
-
 
   return (
     <>
@@ -188,14 +178,14 @@ const SignIn: React.FC = () => {
                 Sign In to Admin Panel
               </h2>
 
-              <form onSubmit={handleSubmit(onSubmit)} >
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
-                      {...register('email', { required: "true" })}
+                      {...register("email", { required: "true" })}
                       type="email"
                       name="email"
                       placeholder="Enter your email"
@@ -228,7 +218,7 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      {...register('password', { required: true })}
+                      {...register("password", { required: true })}
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"

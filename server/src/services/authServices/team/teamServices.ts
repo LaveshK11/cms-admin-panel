@@ -1,13 +1,13 @@
-import Team, { TeamAttributes } from "../../db/models/TeamModel";
-import { ServerError, ValidationError } from "../../utils/custom/customError";
-import { ValidationResult } from "../../utils/interface/jodResullt";
-import { TeamMemberFormSchema } from "../../utils/validation/schemas/dataObj";
+import Team, { TeamAttributes } from "../../../db/models/TeamModel";
+import { ServerError, ValidationError } from "../../../utils/custom/customError";
+import { ValidationResult } from "../../../utils/interface/jodResullt";
+import { TeamMemberFormSchema } from "../../../utils/validation/schemas/dataObj";
 
 class TeamServices {
 
     constructor() { }
 
-    private async deleteOpeations(userId: string): Promise<object> {
+    private async deleteOperations(userId: string): Promise<object> {
 
         let result: number = await Team.destroy({ where: { id: userId } })
 
@@ -16,7 +16,7 @@ class TeamServices {
     }
 
 
-    private async isExsistingMember(email: string): Promise<boolean> {
+    private async isExistingMember(email: string): Promise<boolean> {
 
         let result: object | null = await Team.findOne({ where: { email: email } })
 
@@ -29,9 +29,9 @@ class TeamServices {
 
         try {
 
-            const alreayMember: boolean = await this.isExsistingMember(data.email)
+            const alreadyMember: boolean = await this.isExistingMember(data.email)
 
-            if (alreayMember) return { status: false, message: "Already Ateam Member" }
+            if (alreadyMember) return { status: false, message: "Already team member" }
             else {
                 
                 await Team.create(data)
@@ -50,7 +50,7 @@ class TeamServices {
     }
 
     public async deleteMember(id: string): Promise<object> {
-        const result: object = await this.deleteOpeations(id)
+        const result: object = await this.deleteOperations(id)
         return result
     }
 

@@ -1,9 +1,9 @@
 import bcrpyt from 'bcrypt'
-import { UserCredModel } from "../../db/models/userCredModel";
-import { ValidationError } from "../../utils/custom/customError";
-import Token_Utitlity from "../../utils/token/tokenGenerator";
-import { loginSchema } from "../../utils/validation/schemas/dataObj";
-import { ValidationResult } from '../../utils/interface/jodResullt';
+import { UserCredModel } from "../../../db/models/userCredModel";
+import { ValidationError } from "../../../utils/custom/customError";
+import Token_Utitlity from "../../../utils/token/tokensUtility";
+import { loginSchema } from "../../../utils/validation/schemas/dataObj";
+import { ValidationResult } from '../../../utils/interface/jodResullt';
 
 const tokenService = new Token_Utitlity();
 
