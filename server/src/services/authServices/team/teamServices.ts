@@ -1,6 +1,6 @@
 import Team, { TeamAttributes } from "../../../db/models/TeamModel";
 import { ServerError, ValidationError } from "../../../utils/custom/customError";
-import { ValidationResult } from "../../../utils/interface/jodResullt";
+import { ValidationResult } from "../../../utils/interface/jodResult";
 import { TeamMemberFormSchema } from "../../../utils/validation/schemas/dataObj";
 
 class TeamServices {

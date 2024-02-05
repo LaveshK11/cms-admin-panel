@@ -29,6 +29,7 @@
     "eslint-config-next": "13.4.12",
     "express": "^4.18.2",
     "jsvectormap": "^1.5.3",
+    "morgan": "^1.10.0",
     "mysql2": "^3.7.0",
     "next": "13.4.12",
     "pg-hstore": "^2.3.4",

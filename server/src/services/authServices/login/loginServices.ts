@@ -1,11 +1,11 @@
-import bcrpyt from 'bcrypt'
+import bcrypt from 'bcrypt'
+import Token_Utility from '../../../utils/token/tokensUtility';
 import { UserCredModel } from "../../../db/models/userCredModel";
-import { ValidationError } from "../../../utils/custom/customError";
-import Token_Utitlity from "../../../utils/token/tokensUtility";
+import { BadRequest, ValidationError } from "../../../utils/custom/customError";
 import { loginSchema } from "../../../utils/validation/schemas/dataObj";
-import { ValidationResult } from '../../../utils/interface/jodResullt';
+import { ValidationResult } from '../../../utils/interface/jodResult';
 
-const tokenService = new Token_Utitlity();
+const tokenService = new Token_Utility();
 
 
 interface dataValueObj {
@@ -16,28 +16,28 @@ interface dataValueObj {
     }
 }
 
-class loginController {
-    private async checkUserCred(email: string, password: string): Promise<object> {
-        const validateData: ValidationResult = loginSchema.validate({ email, password });
+class loginServices {
+    
+    private async checkUserCred(user_email: string, user_password: string): Promise<object> {
+        const validateData: ValidationResult = loginSchema.validate({ user_email, user_password });
 
         if (validateData.error) {
-            throw new ValidationError(validateData.error.message);
+            return new ValidationError(validateData.error.message);
         } else {
             try {
                 const result: dataValueObj | null = await UserCredModel.findOne({
                     where: {
-                        user_email: email,
+                        user_email: user_email,
                     },
                 })
 
                 if (result != null) {
 
-                    const hashPassowrd: string = result.dataValues?.user_password;
+                    const hashPassword: string = result.dataValues?.user_password;
 
-                    const bcrpytCompare: boolean = await bcrpyt.compare(password, hashPassowrd);
+                    const bcryptCompare: boolean = await bcrypt.compare(user_password, hashPassword);
 
-
-                    if (bcrpytCompare) {
+                    if (bcryptCompare) {
                         const id: number = result.dataValues.id;
                         const userEmail: string = result.dataValues.user_email;
 
@@ -57,15 +57,18 @@ class loginController {
                 }
             } catch (error) {
                 console.error('Error checking user credentials:', error);
-                return new Error('Error checking user credentials');
+                return new BadRequest('Error while checking user credentials');
             }
         }
     }
 
     public async getUserCred(data: { email: string; password: string }): Promise<object> {
         try {
+
             const result = await this.checkUserCred(data.email, data.password);
+
             return result;
+
         } catch (error) {
             console.error('Error getting user credentials:', error);
             throw new Error('Error getting user credentials');
@@ -73,4 +76,4 @@ class loginController {
     }
 }
 
-export { loginController };
+export { loginServices };

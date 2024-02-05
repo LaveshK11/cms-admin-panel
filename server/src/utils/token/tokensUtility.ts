@@ -11,7 +11,7 @@ class Token_Utility {
 
     private async getSignToken(data: { id: number; user_email: string }): Promise<string> {
         try {
-            const token: string = await jwt.sign({ id: data.id, user_email: data.user_email }, this.privateKey, { expiresIn: '4s' });
+            const token: string = await jwt.sign({ id: data.id, user_email: data.user_email }, this.privateKey, { expiresIn: '1h' });
             return token;
         } catch (error) {
             throw new ServerError();
@@ -31,8 +31,9 @@ class Token_Utility {
     public async verifyToken(token: string): Promise<object> {
         try {
             const obj = await jwt.verify(token, this.privateKey);
-            return { obj }
+            return { status: true, obj }
         } catch (error) {
+            console.log(error)
             return new BadRequest();
         }
     }

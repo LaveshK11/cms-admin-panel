@@ -1,8 +1,8 @@
 import { NextFunction, Response, Request } from "express"
-import { loginController } from "../../services/authServices/login/loginServices";
+import { loginServices } from "../../services/authServices/login/loginServices";
 
 
-const loginProcess = new loginController()
+const loginProcess = new loginServices()
 
 export async function userLogin(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

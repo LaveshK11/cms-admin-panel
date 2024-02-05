@@ -4,7 +4,7 @@ import ServerApi from "@/lib/instance/serverApiInstance";
 import TextEditor from "../TextEditor/TextEditor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { addMemberSchema } from "@/zodSchema/addMember";
+import { addMemberSchema } from "@/zodSchema/addMemberInfo";
 import { toast } from "react-toastify";
 
 type FormData = z.infer<typeof addMemberSchema>;
