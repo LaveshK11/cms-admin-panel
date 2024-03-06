@@ -20,14 +20,15 @@ const SignIn: React.FC = () => {
   async function onSubmit(data: SigninForm): Promise<void> {
     try {
       const result: any = await ServerApi.post("/login", data);
-      if (result.data.status) {
+      console.log(data)
+      if (result.data?.status) {
         toast.success("Login Successfully!");
         router.push("/");
       } else {
-        toast.error(result.data.message);
+        toast.error(result.data.description);
       }
-    } catch (error) {
-      toast.error("Error while login");
+    } catch (error: any) {
+      toast.error(error.response.data.description);
     }
   }
 
@@ -39,7 +40,6 @@ const SignIn: React.FC = () => {
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
-
               <span className="mt-15 inline-block">
                 <svg
                   width="350"

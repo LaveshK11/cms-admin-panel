@@ -30,11 +30,15 @@ class Token_Utility {
 
     public async verifyToken(token: string): Promise<object> {
         try {
-            const obj = await jwt.verify(token, this.privateKey);
-            return { status: true, obj }
+            const obj: string | jwt.JwtPayload = await jwt.verify(token, this.privateKey);
+            return { status: true, obj };
         } catch (error) {
-            console.log(error)
-            return new BadRequest();
+            if (error instanceof jwt.JsonWebTokenError) {
+                throw new BadRequest('Malformed JWT');
+            } else {
+                console.error('Error verifying token:', error);
+                return {};
+            }
         }
     }
 

@@ -59,7 +59,7 @@ const Team = sequelizeInstance.define<TeamModel>('team', {
     language: {
         type: DataTypes.STRING,
     },
-  
+
 }, {
     timestamps: true
 })

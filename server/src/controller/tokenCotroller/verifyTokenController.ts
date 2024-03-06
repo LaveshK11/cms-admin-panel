@@ -10,6 +10,7 @@ export async function VerifyAccessToken(req: Request, res: Response, next: NextF
         res.status(200).json(result);
 
     } catch (error) {
+        console.log(error)
         next(error);
-        }
+    }
 }

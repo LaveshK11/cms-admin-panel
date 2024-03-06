@@ -11,21 +11,29 @@ const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm<SignupForm>({ resolver: zodResolver(signupFromSchemaObj) });
 
   async function onSubmit(data: SignupForm): Promise<void> {
     try {
       delete data.confirmPassword;
-      const result: any = await ServerApi.post("/signup", data);
+      const result: any = await ServerApi.post("/create_user", data);
       console.log(result);
       if (result.data.status) {
         toast.success("Member Created Successfully");
+        reset();
       } else {
         toast.error(result.data.message);
       }
-    } catch (error) {
-      toast.error("Error while Creating member");
+    } catch (error: any) {
+      console.log(error)
+      reset();
+      if (error.response.data.description) {
+        toast.error(error.response.data.description);
+      } else {
+        toast.error("Error while adding team member");
+      }
     }
   }
 

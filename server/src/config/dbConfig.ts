@@ -14,13 +14,17 @@ interface DatabaseInterface {
     };
 }
 
+interface RedisInstance {
+    PORT: number,
+    HOST: string,
+}
 
 export const databaseConfig: DatabaseInterface = {
     DB: 'adminPanel',
     User: 'root',
     Password: '',
     Host: '127.0.0.1',
-    dialect: 'mysql' , // Cast the string to Dialect
+    dialect: 'mysql', // Cast the string to Dialect
     pool: {
         max: 5,
         min: 0,
@@ -28,3 +32,9 @@ export const databaseConfig: DatabaseInterface = {
         idle: 10000
     }
 };
+
+
+export const redisConfig: RedisInstance = {
+    PORT: 6379,
+    HOST: '127.0.0.1'
+}

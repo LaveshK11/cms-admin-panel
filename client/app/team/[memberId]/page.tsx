@@ -4,13 +4,9 @@ import api from "@/lib/instance/axiosInstance";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { TeamAttributes } from "@/models/teams/TeamsModel";
-import * as DOMPurify from 'dompurify';
+import { GetParams } from "@/interfaces/urlParams";
 
-interface GetParams {
-  params: {
-    memberId: string;
-  };
-}
+
 
 export default function EditTeamPage(params: GetParams) {
   const [tableData, setTableData] = useState<TeamAttributes>({

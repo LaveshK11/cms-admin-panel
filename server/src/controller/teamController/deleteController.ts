@@ -1,8 +1,8 @@
 import { NextFunction, Response, Request } from "express"
-import TeamServices from "../../services/authServices/team/teamServices";
+import Team_Services from "../../services/team/teamServices";
 
 
-const TeamService = new TeamServices()
+const TeamService = new Team_Services()
 export async function DeleteTeamMember(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
 

@@ -1,19 +1,20 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelizeInstance } from "../dbConnect";
+import { RoleModel } from "./RoleMode";
 
 export interface UserAttributes {
     id: number;
     user_email: string;
     user_password: string;
-    user_name: string,
-    user_role: string,
+    user_name: string;
+    user_role: string;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
 
 export interface UserModel extends Model<UserAttributes, UserCreationAttributes>, UserAttributes { }
 
-export const UserCredModel = sequelizeInstance.define<UserModel>('Users', {
+export const UserModel = sequelizeInstance.define<UserModel>('Users', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -38,9 +39,15 @@ export const UserCredModel = sequelizeInstance.define<UserModel>('Users', {
     },
     user_role: {
         type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: "user"
+        allowNull: true,
     }
-})
+});
 
-UserCredModel.sync({ alter: true, force: true })
+UserModel.belongsTo(RoleModel, {
+    foreignKey: 'user_role',
+    targetKey: 'role_name',
+    onUpdate: 'CASCADE', // Cascade update
+    onDelete: 'NO ACTION'
+});
+
+UserModel.sync({}); 

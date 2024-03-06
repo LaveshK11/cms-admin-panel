@@ -5,6 +5,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser"
 import morgan from 'morgan';
+import { redisConnect } from './src/db/redis/redisConnect';
+import { validate } from './src/middleware/validateToken';
+import { errorHandler } from "./src/middleware/errorHandle"
+import {validatePermission} from "./src/middleware/validatePermission"
 dotenv.config();
 
 const app: Application = express();
@@ -19,10 +23,14 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 };
 
+redisConnect()
+
 app.use(morgan('tiny'));
 app.use(cors(corsOptions));
-
+app.use(validate)
+app.use(validatePermission)
 app.use('/', routes);
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

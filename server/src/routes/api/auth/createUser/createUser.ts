@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import { userSignup } from '../../../../controller/signupController/signup';
+import { createUser } from '../../../../controller/signupController/createUser';
 const router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
     res.send("Signup Working");
 })
 
-router.post('/', userSignup)
+router.post('/', createUser)
 
 export default router;

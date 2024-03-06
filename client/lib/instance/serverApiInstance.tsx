@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
   },
   withCredentials: true,
   // adapter: httpAdapter, // Use Node.js HTTP adapter
-
 });
 
 export const ServerApi = {
@@ -19,8 +18,7 @@ export const ServerApi = {
       ...params,
     }),
   post: <T,>(url: string, data?: any, config?: AxiosRequestConfig) =>
-    axiosInstance.post<T>(url, data, {
-    }),
+    axiosInstance.post<T>(url, data, {}),
   patch: <T,>(url: string, data: any) =>
     axiosInstance.patch<T>(url, data, {
       withCredentials: true,
