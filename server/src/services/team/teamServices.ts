@@ -12,9 +12,8 @@ class Team_Services {
         let result: number = await Team.destroy({ where: { id: userId } })
 
         if (result) return { status: true, message: "Team Member Deleted Successfully" }
-        else return { sataus: false, message: "No Team Member Found" }
+        else return { status: false, message: "No Team Member Found" }
     }
-
 
     private async isExistingMember(email: string): Promise<boolean> {
 
@@ -69,7 +68,6 @@ class Team_Services {
         }
 
     }
-
 
 }
 
